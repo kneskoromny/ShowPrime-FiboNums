@@ -18,6 +18,7 @@
 		F7A24E6E27D0CBA500430CE6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A24E6D27D0CBA500430CE6 /* Constants.swift */; };
 		F7A24E7027D1074600430CE6 /* NumberViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A24E6F27D1074600430CE6 /* NumberViewModel.swift */; };
 		F7A24E7227D107B500430CE6 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A24E7127D107B500430CE6 /* Model.swift */; };
+		F7A24E7427D1E3AB00430CE6 /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A24E7327D1E3AB00430CE6 /* Box.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		F7A24E6D27D0CBA500430CE6 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		F7A24E6F27D1074600430CE6 /* NumberViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberViewModel.swift; sourceTree = "<group>"; };
 		F7A24E7127D107B500430CE6 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		F7A24E7327D1E3AB00430CE6 /* Box.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Box.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +70,7 @@
 			children = (
 				F7A24E5527D0C57F00430CE6 /* AppDelegate.swift */,
 				F7A24E5727D0C57F00430CE6 /* SceneDelegate.swift */,
+				F7A24E7327D1E3AB00430CE6 /* Box.swift */,
 				F7A24E5927D0C57F00430CE6 /* NumberViewController.swift */,
 				F7A24E6F27D1074600430CE6 /* NumberViewModel.swift */,
 				F7A24E7127D107B500430CE6 /* Model.swift */,
@@ -153,6 +156,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7A24E7427D1E3AB00430CE6 /* Box.swift in Sources */,
 				F7A24E6A27D0C71500430CE6 /* NumCell.swift in Sources */,
 				F7A24E5A27D0C57F00430CE6 /* NumberViewController.swift in Sources */,
 				F7A24E5627D0C57F00430CE6 /* AppDelegate.swift in Sources */,

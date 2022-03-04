@@ -9,31 +9,47 @@ import Foundation
 
 class NumberViewModel {
     
-    var primeNums = [Num]()
-    var indexes = [0]
+    var primeNums: Box<[Num]> = Box([])
+    var startNumber = 0
     
-    func prime() {
-        let startArr: [Int] = Array(2...10000)
+    private let numsForBatch = 200
+    
+    // MARK: - Initializer
+    init() {
+        loadBatch()
+    }
+    
+    // MARK: - Methods
+    func loadBatch() {
+        let finalNumber = startNumber + numsForBatch
+        let startArr: [Int] = Array(startNumber...finalNumber)
         
         DispatchQueue.global().async {
-            print(#function, "Current Thread: \(Thread.current)")
             
-            let primeNumbers = startArr.filter { num in
+            startArr.filter { num in
                 self.isPrime(num)
+            }.forEach { filteredNum in
+                let primeNum = Num(title: String(filteredNum))
+                self.primeNums.value.append(primeNum)
             }
-            print("prime numbers: \(primeNumbers)")
-            
-//            startArr.forEach { index in
-//                if index % 4 == 0 {
-//                    let prevNum = index - 1
-//                    self.indexes.append(prevNum)
-//                    self.indexes.append(index)
-//                }
-//            }
-//            print("indexes: \(self.indexes)")
         }
     }
+    
+    
+    func ind(n: Int) -> [Int] {
+        var array = [0]
+        (4...n).forEach { num in
+            if num % 4 == 0 {
+                let prevNum = num - 1
+                array.append(prevNum)
+                array.append(num)
+            }
+        }
+        return array
+    }
+    
     private func isPrime(_ num: Int) -> Bool {
+        guard num > 1 else { return false }
         for iteration in 2..<num {
             if num % iteration == 0 {
                 return false

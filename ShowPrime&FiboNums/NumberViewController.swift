@@ -10,14 +10,6 @@ import UIKit
 class NumberViewController: UIViewController {
     
     
-    let data = [
-        "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"
-    ]
-    
-    lazy var indexes: [Int] = {
-        return ind(n: 20)
-    }()
-    
     let segmentedControl = UIElementsFactory.makeSegmentedControl(#selector(changeData))
     let collectionView = UIElementsFactory.makeCollectionView()
     
@@ -32,15 +24,11 @@ class NumberViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         
-        //print(indexes)
-        
-        viewModel.prime()
-        
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        print("view will appear")
+        viewModel.primeNums.bind { primeNums in
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+        }
     }
     
     // MARK: - Layout
@@ -65,7 +53,6 @@ class NumberViewController: UIViewController {
             collectionView.bottomAnchor.constraint(
                 equalTo: view.layoutMarginsGuide.bottomAnchor)
         ])
-        
     }
     
     // MARK: - Methods
@@ -76,37 +63,25 @@ class NumberViewController: UIViewController {
         default: break
         }
     }
-    
-    func ind(n: Int) -> [Int] {
-        var array = [0]
-        (4...n).forEach { num in
-            if num % 4 == 0 {
-                let prevNum = num - 1
-                array.append(prevNum)
-                array.append(num)
-            }
-        }
-        return array
-    }
-   
 }
 
 // MARK: - CollectionView data source
 extension NumberViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        data.count
+        viewModel.primeNums.value.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if indexPath.row == viewModel.primeNums.value.count - 1 {
+            viewModel.startNumber += 200
+            viewModel.loadBatch()
+        }
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: K.cellID, for: indexPath) as! NumCell
         let index = indexPath.row
-        let num = data[index]
+        let num = viewModel.primeNums.value[index]
         
-        cell.label.text = num
-        if indexes.contains(index) {
-            cell.colored = true
-        }
-        cell.backgroundColor = cell.colored ? .systemGray3 : .systemBackground
+        cell.label.text = num.title
+        // TODO: how to change color?
         
         return cell
     }
@@ -124,7 +99,6 @@ extension NumberViewController: UICollectionViewDelegateFlowLayout {
         
         return CGSize(width: width, height: height)
     }
-    // вертикальный отступ
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
