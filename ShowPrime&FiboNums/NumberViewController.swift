@@ -74,14 +74,13 @@ extension NumberViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.row == viewModel.primeNums.value.count - 1 {
             viewModel.startNumber += 200
-            viewModel.loadBatch()
+            viewModel.loadBatchPrimes()
         }
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: K.cellID, for: indexPath) as! NumCell
-        let index = indexPath.row
-        let num = viewModel.primeNums.value[index]
+        let num = viewModel.primeNums.value[indexPath.row]
         
         cell.label.text = num.title
-        // TODO: how to change color?
+        cell.backgroundColor = num.colored ? K.Colors.dark : K.Colors.light
         
         return cell
     }

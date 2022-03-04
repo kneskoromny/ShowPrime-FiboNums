@@ -10,10 +10,8 @@ import UIKit
 class NumCell: UICollectionViewCell {
     
     let label = UIElementsFactory.makeLabel()
-    var colored = false
     
     // MARK: - Initializers
-    
     override init(frame: CGRect) {
         super.init(frame: .zero)
         addLabel()
