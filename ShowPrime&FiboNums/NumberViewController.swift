@@ -29,6 +29,7 @@ class NumberViewController: UIViewController {
                 self.collectionView.reloadData()
             }
         }
+        //viewModel.loadBatchFibos()
     }
     
     // MARK: - Layout
@@ -72,14 +73,14 @@ extension NumberViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.row == viewModel.primeNums.value.count - 1 {
-            viewModel.startNumber += 200
-            viewModel.loadBatchPrimes()
-        }
+//        if indexPath.row == viewModel.primeNums.value.count - 1 {
+//            viewModel.startNumber += 200
+//            viewModel.loadBatchPrimes()
+//        }
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: K.cellID, for: indexPath) as! NumCell
         let num = viewModel.primeNums.value[indexPath.row]
         
-        cell.label.text = num.title
+        cell.label.text = String(num.title)
         cell.backgroundColor = num.colored ? K.Colors.dark : K.Colors.light
         
         return cell

@@ -22,6 +22,8 @@ struct UIElementsFactory {
         let l = UILabel()
         l.translatesAutoresizingMaskIntoConstraints = false
         l.font = UIFont.systemFont(ofSize: 30)
+        l.textAlignment = .center
+        l.adjustsFontSizeToFitWidth = true
         return l
     }
     

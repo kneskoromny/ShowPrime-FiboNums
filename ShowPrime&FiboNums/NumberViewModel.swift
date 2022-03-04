@@ -19,7 +19,7 @@ class NumberViewModel {
     
     // MARK: - Initializer
     init() {
-        loadBatchPrimes()
+        loadBatchFibos()
     }
     
     // MARK: - Methods
@@ -32,13 +32,35 @@ class NumberViewModel {
             startArr.filter { num in
                 self.isPrime(num)
             }.forEach { filteredNum in
-                let title = String(filteredNum)
                 let colored = self.getColored(dependsOf: prevDark)
                 
-                let primeNum = Num(title: title, colored: colored)
+                let primeNum = Num(title: filteredNum, colored: colored)
                 self.primeNums.value.append(primeNum)
             }
         }
+    }
+    func getFibo(of number: Int) -> Int {
+        var first = 0
+        var second = 1
+
+        for _ in 0..<number {
+            let previous = first
+            first = second
+            second = previous + first
+        }
+
+        return first
+    }
+    
+    func loadBatchFibos() {
+        for i in 0..<92 {
+            let result = getFibo(of: i)
+            let colored = self.getColored(dependsOf: prevDark)
+            let fiboNum = Num(title: result, colored: colored)
+            primeNums.value.append(fiboNum)
+        }
+        //print("numbers: \(numbers)")
+        print("fibo numbers: \(primeNums.value)")
     }
     
     private func getColored(dependsOf previous: (Bool, Bool)) -> Bool {

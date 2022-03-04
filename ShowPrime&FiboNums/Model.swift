@@ -8,6 +8,6 @@
 import Foundation
 
 struct Num {
-    let title: String
+    let title: Int
     let colored: Bool
 }

@@ -24,8 +24,14 @@ class NumCell: UICollectionViewCell {
         contentView.addSubview(label)
         
         NSLayoutConstraint.activate([
-            label.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            label.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+            //label.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            label.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            
+            label.leadingAnchor.constraint(
+                equalTo: contentView.leadingAnchor, constant: 8),
+            label.trailingAnchor.constraint(
+                equalTo: contentView.trailingAnchor, constant: -8),
+            
         ])
     }
 }
