@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class NumberViewController: UIViewController {
     
     
     let data = [
@@ -21,6 +21,9 @@ class ViewController: UIViewController {
     let segmentedControl = UIElementsFactory.makeSegmentedControl(#selector(changeData))
     let collectionView = UIElementsFactory.makeCollectionView()
     
+    var viewModel = NumberViewModel()
+    
+    // MARK: - View life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -29,7 +32,15 @@ class ViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         
-        print(indexes)
+        //print(indexes)
+        
+        viewModel.prime()
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print("view will appear")
     }
     
     // MARK: - Layout
@@ -77,10 +88,11 @@ class ViewController: UIViewController {
         }
         return array
     }
+   
 }
 
 // MARK: - CollectionView data source
-extension ViewController: UICollectionViewDataSource {
+extension NumberViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         data.count
     }
@@ -101,7 +113,7 @@ extension ViewController: UICollectionViewDataSource {
 }
 
 // MARK: - CollectionView delegate flow layout
-extension ViewController: UICollectionViewDelegateFlowLayout {
+extension NumberViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
