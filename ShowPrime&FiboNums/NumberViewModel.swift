@@ -7,25 +7,24 @@
 
 import Foundation
 
-class NumberViewModel {
+final class NumberViewModel {
     
-    var primeNums: Box<[Num]> = Box([])
-    var startNumber = 0
+    var nums: Box<[Num]> = Box([])
+    var viewType = K.ViewType.prime
+    var startNum = 0
     
-    var prevDark = (far: false, near: true)
-    var currDark = true
-    
+    private var prevDark = (far: false, near: true)
     private let numsForBatch = 200
     
     // MARK: - Initializer
     init() {
-        loadBatchFibos()
+        loadBatchPrimes()
     }
     
-    // MARK: - Methods
+    // MARK: - Public
     func loadBatchPrimes() {
-        let finalNumber = startNumber + numsForBatch
-        let startArr: [Int] = Array(startNumber...finalNumber)
+        let finalNum = startNum + numsForBatch
+        let startArr: [Int] = Array(startNum...finalNum)
 
         DispatchQueue.global().async { [self] in
             
@@ -35,34 +34,26 @@ class NumberViewModel {
                 let colored = self.getColored(dependsOf: prevDark)
                 
                 let primeNum = Num(title: filteredNum, colored: colored)
-                self.primeNums.value.append(primeNum)
+                self.nums.value.append(primeNum)
             }
         }
     }
-    func getFibo(of number: Int) -> Int {
-        var first = 0
-        var second = 1
-
-        for _ in 0..<number {
-            let previous = first
-            first = second
-            second = previous + first
-        }
-
-        return first
-    }
-    
+    // TODO: try load batches
     func loadBatchFibos() {
-        for i in 0..<92 {
-            let result = getFibo(of: i)
-            let colored = self.getColored(dependsOf: prevDark)
-            let fiboNum = Num(title: result, colored: colored)
-            primeNums.value.append(fiboNum)
+        DispatchQueue.global().async { [self] in
+            
+            for i in 0..<92 {
+                let result = getFibo(of: i)
+                let colored = self.getColored(dependsOf: prevDark)
+                let fiboNum = Num(title: result, colored: colored)
+                nums.value.append(fiboNum)
+            }
+            //print("numbers: \(numbers)")
+            //print("fibo numbers: \(nums.value)")
         }
-        //print("numbers: \(numbers)")
-        print("fibo numbers: \(primeNums.value)")
     }
     
+    // MARK: - Private
     private func getColored(dependsOf previous: (Bool, Bool)) -> Bool {
         var current = true
         if previous.0 && previous.1
@@ -73,6 +64,19 @@ class NumberViewModel {
         prevDark.near = current
         
         return current
+    }
+    
+    private func getFibo(of number: Int) -> Int {
+        var first = 0
+        var second = 1
+
+        for _ in 0..<number {
+            let previous = first
+            first = second
+            second = previous + first
+        }
+
+        return first
     }
     
     private func isPrime(_ num: Int) -> Bool {

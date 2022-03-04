@@ -7,13 +7,14 @@
 
 import UIKit
 
-class NumberViewController: UIViewController {
-    
-    
-    let segmentedControl = UIElementsFactory.makeSegmentedControl(#selector(changeData))
-    let collectionView = UIElementsFactory.makeCollectionView()
+final class NumberViewController: UIViewController {
     
     var viewModel = NumberViewModel()
+    
+    // MARK: - UI elements
+    let segmentedControl = UIElementsFactory.makeSegmentedControl(#selector(changeState))
+    let collectionView = UIElementsFactory.makeCollectionView()
+    
     
     // MARK: - View life cycle
     override func viewDidLoad() {
@@ -24,12 +25,11 @@ class NumberViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         
-        viewModel.primeNums.bind { primeNums in
+        viewModel.nums.bind { primeNums in
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
             }
         }
-        //viewModel.loadBatchFibos()
     }
     
     // MARK: - Layout
@@ -57,11 +57,18 @@ class NumberViewController: UIViewController {
     }
     
     // MARK: - Methods
-    @objc func changeData(_ sender: UISegmentedControl) {
+    @objc func changeState(_ sender: UISegmentedControl) {
+        viewModel.nums.value = []
+        
         switch sender.selectedSegmentIndex {
-        case 0: print("I show prime")
-        case 1: print("I show fibo")
-        default: break
+        case 0:
+            viewModel.viewType = K.ViewType.prime
+            viewModel.loadBatchPrimes()
+        case 1:
+            viewModel.viewType = K.ViewType.fibo
+            viewModel.loadBatchFibos()
+        default:
+            break
         }
     }
 }
@@ -69,16 +76,21 @@ class NumberViewController: UIViewController {
 // MARK: - CollectionView data source
 extension NumberViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        viewModel.primeNums.value.count
+        viewModel.nums.value.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        if indexPath.row == viewModel.primeNums.value.count - 1 {
-//            viewModel.startNumber += 200
-//            viewModel.loadBatchPrimes()
-//        }
+        if indexPath.row == viewModel.nums.value.count - 1 {
+            switch viewModel.viewType {
+            case .prime:
+                viewModel.startNum += 200
+                viewModel.loadBatchPrimes()
+            case .fibo:
+                break
+            }
+        }
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: K.cellID, for: indexPath) as! NumCell
-        let num = viewModel.primeNums.value[indexPath.row]
+        let num = viewModel.nums.value[indexPath.row]
         
         cell.label.text = String(num.title)
         cell.backgroundColor = num.colored ? K.Colors.dark : K.Colors.light

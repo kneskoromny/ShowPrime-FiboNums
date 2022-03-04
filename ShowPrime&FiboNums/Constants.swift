@@ -15,4 +15,9 @@ enum K {
         static let dark = UIColor.systemGray5
         static let light = UIColor.systemBackground
     }
+    
+    enum ViewType {
+        case prime
+        case fibo
+    }
 }

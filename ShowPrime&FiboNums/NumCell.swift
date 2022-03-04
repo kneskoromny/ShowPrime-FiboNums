@@ -17,16 +17,15 @@ class NumCell: UICollectionViewCell {
         addLabel()
     }
     required init?(coder: NSCoder) {
-        fatalError("Не реализован кодер")
+        fatalError("No coder implementation")
     }
     
     func addLabel() {
         contentView.addSubview(label)
         
         NSLayoutConstraint.activate([
-            //label.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            label.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            
+            label.centerYAnchor.constraint(
+                equalTo: contentView.centerYAnchor),
             label.leadingAnchor.constraint(
                 equalTo: contentView.leadingAnchor, constant: 8),
             label.trailingAnchor.constraint(
