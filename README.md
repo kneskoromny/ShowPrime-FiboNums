@@ -14,6 +14,6 @@
 *  асинхронная, пакетная загрузка данных
 
 ### Скриншоты
-![Simulator Screen Shot - iPhone 12 - 2022-03-05 at 12 19 36](https://user-images.githubusercontent.com/25160645/156877821-bd1e023a-a089-4ff3-9a44-d1936816d0b9.png)
 
-![Simulator Screen Shot - iPhone 12 - 2022-03-05 at 12 19 43](https://user-images.githubusercontent.com/25160645/156877833-ac6432d2-210c-4458-8a80-e6a95dd4dfbc.png)
+![Simulator Screen Shot - iPhone 12 - 2022-03-05 at 12 19 36](https://user-images.githubusercontent.com/25160645/156877869-87f68920-2e36-4f33-9e0e-b13a16814737.png)
+![Simulator Screen Shot - iPhone 12 - 2022-03-05 at 12 19 43](https://user-images.githubusercontent.com/25160645/156877873-5fb95310-797a-4426-859d-7bb82b3eafc3.png)
