@@ -10,10 +10,11 @@ import Foundation
 final class NumberViewModel {
     
     var nums: Box<[Num]> = Box([])
+    
     var viewType = K.ViewType.prime
     var startNum = 0
+    var isPrevCellsColored = (far: false, near: true)
     
-    private var prevDark = (far: false, near: true)
     private let numsForBatch = 200
     
     // MARK: - Initializer
@@ -23,6 +24,8 @@ final class NumberViewModel {
     
     // MARK: - Public
     func loadBatchPrimes() {
+        print("Prime startNum: \(startNum)")
+        
         let finalNum = startNum + numsForBatch
         let startArr: [Int] = Array(startNum...finalNum)
 
@@ -31,7 +34,7 @@ final class NumberViewModel {
             startArr.filter { num in
                 self.isPrime(num)
             }.forEach { filteredNum in
-                let colored = self.getColored(dependsOf: prevDark)
+                let colored = self.getColored(dependsOf: isPrevCellsColored)
                 
                 let primeNum = Num(title: filteredNum, colored: colored)
                 self.nums.value.append(primeNum)
@@ -40,17 +43,25 @@ final class NumberViewModel {
     }
     // TODO: try load batches
     func loadBatchFibos() {
+        //print("Fibo prevDark: \(isPrevCellsColored)")
+        
         DispatchQueue.global().async { [self] in
             
             for i in 0..<92 {
                 let result = getFibo(of: i)
-                let colored = self.getColored(dependsOf: prevDark)
+                let colored = self.getColored(dependsOf: isPrevCellsColored)
                 let fiboNum = Num(title: result, colored: colored)
                 nums.value.append(fiboNum)
             }
             //print("numbers: \(numbers)")
             //print("fibo numbers: \(nums.value)")
         }
+    }
+    
+    func refreshView() {
+        nums.value = []
+        isPrevCellsColored = (false, true)
+        startNum = 0
     }
     
     // MARK: - Private
@@ -60,8 +71,8 @@ final class NumberViewModel {
         || previous.0 && !previous.1 {
             current = false
         }
-        prevDark.far = previous.1
-        prevDark.near = current
+        isPrevCellsColored.far = previous.1
+        isPrevCellsColored.near = current
         
         return current
     }

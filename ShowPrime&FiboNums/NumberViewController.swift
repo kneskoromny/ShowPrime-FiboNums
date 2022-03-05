@@ -58,7 +58,10 @@ final class NumberViewController: UIViewController {
     
     // MARK: - Methods
     @objc func changeState(_ sender: UISegmentedControl) {
-        viewModel.nums.value = []
+//        viewModel.nums.value = []
+//        viewModel.isPrevCellsColored = (false, true)
+        
+        viewModel.refreshView()
         
         switch sender.selectedSegmentIndex {
         case 0:
