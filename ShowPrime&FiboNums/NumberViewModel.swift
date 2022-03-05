@@ -42,21 +42,21 @@ final class NumberViewModel {
             }
         }
     }
-    // TODO: try load batches
+    
     func loadBatchFibos() {
         print("Fibo startNum: \(startNum)")
         let finalNum = startNum + fiboBatch
         
         DispatchQueue.global().async { [self] in
-            // 92
-            for i in startNum..<finalNum where finalNum < 92 {
-                let result = getFibo(of: i)
+            
+            for i in startNum..<finalNum where finalNum < 101 {
+                guard i < 92 else { return }
+                
+                let fibo = getFibo(of: i)
                 let colored = self.getColored(dependsOf: isPrevCellsColored)
-                let fiboNum = Num(title: result, colored: colored)
+                let fiboNum = Num(title: fibo, colored: colored)
                 nums.value.append(fiboNum)
             }
-            //print("numbers: \(numbers)")
-            //print("fibo numbers: \(nums.value)")
         }
     }
     
