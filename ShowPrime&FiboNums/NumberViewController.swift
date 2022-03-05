@@ -89,7 +89,8 @@ extension NumberViewController: UICollectionViewDataSource {
                 viewModel.startNum += 200
                 viewModel.loadBatchPrimes()
             case .fibo:
-                break
+                viewModel.startNum += 20
+                viewModel.loadBatchFibos()
             }
         }
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: K.cellID, for: indexPath) as! NumCell

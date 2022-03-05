@@ -15,7 +15,8 @@ final class NumberViewModel {
     var startNum = 0
     var isPrevCellsColored = (far: false, near: true)
     
-    private let numsForBatch = 200
+    private let primeBatch = 200
+    private let fiboBatch = 20
     
     // MARK: - Initializer
     init() {
@@ -26,7 +27,7 @@ final class NumberViewModel {
     func loadBatchPrimes() {
         print("Prime startNum: \(startNum)")
         
-        let finalNum = startNum + numsForBatch
+        let finalNum = startNum + primeBatch
         let startArr: [Int] = Array(startNum...finalNum)
 
         DispatchQueue.global().async { [self] in
@@ -43,11 +44,12 @@ final class NumberViewModel {
     }
     // TODO: try load batches
     func loadBatchFibos() {
-        //print("Fibo prevDark: \(isPrevCellsColored)")
+        print("Fibo startNum: \(startNum)")
+        let finalNum = startNum + fiboBatch
         
         DispatchQueue.global().async { [self] in
-            
-            for i in 0..<92 {
+            // 92
+            for i in startNum..<finalNum where finalNum < 92 {
                 let result = getFibo(of: i)
                 let colored = self.getColored(dependsOf: isPrevCellsColored)
                 let fiboNum = Num(title: result, colored: colored)
