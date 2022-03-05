@@ -32,35 +32,8 @@ final class NumberViewController: UIViewController {
         }
     }
     
-    // MARK: - Layout
-    private func setupView() {
-        view.addSubview(segmentedControl)
-        view.addSubview(collectionView)
-        
-        NSLayoutConstraint.activate([
-            segmentedControl.topAnchor.constraint(
-                equalTo: view.layoutMarginsGuide.topAnchor),
-            segmentedControl.centerXAnchor.constraint(
-                equalTo: view.centerXAnchor),
-            segmentedControl.widthAnchor.constraint(
-                equalTo: view.layoutMarginsGuide.widthAnchor, multiplier: 0.5),
-            
-            collectionView.topAnchor.constraint(
-                equalTo: segmentedControl.bottomAnchor, constant: 20),
-            collectionView.leadingAnchor.constraint(
-                equalTo: view.layoutMarginsGuide.leadingAnchor),
-            collectionView.trailingAnchor.constraint(
-                equalTo: view.layoutMarginsGuide.trailingAnchor),
-            collectionView.bottomAnchor.constraint(
-                equalTo: view.layoutMarginsGuide.bottomAnchor)
-        ])
-    }
-    
-    // MARK: - Methods
+    // MARK: - UI actions
     @objc func changeState(_ sender: UISegmentedControl) {
-//        viewModel.nums.value = []
-//        viewModel.isPrevCellsColored = (false, true)
-        
         viewModel.refreshView()
         
         switch sender.selectedSegmentIndex {
@@ -76,6 +49,35 @@ final class NumberViewController: UIViewController {
     }
 }
 
+// MARK: - Layout
+extension NumberViewController {
+    private func setupView() {
+        view.backgroundColor = .systemBackground
+        navigationItem.title = K.appName
+        
+        view.addSubview(segmentedControl)
+        view.addSubview(collectionView)
+        
+        NSLayoutConstraint.activate([
+            segmentedControl.topAnchor.constraint(
+                equalTo: view.layoutMarginsGuide.topAnchor, constant: 20),
+            segmentedControl.centerXAnchor.constraint(
+                equalTo: view.centerXAnchor),
+            segmentedControl.widthAnchor.constraint(
+                equalTo: view.layoutMarginsGuide.widthAnchor, multiplier: 0.5),
+            
+            collectionView.topAnchor.constraint(
+                equalTo: segmentedControl.bottomAnchor, constant: 20),
+            collectionView.leadingAnchor.constraint(
+                equalTo: view.layoutMarginsGuide.leadingAnchor),
+            collectionView.trailingAnchor.constraint(
+                equalTo: view.layoutMarginsGuide.trailingAnchor),
+            collectionView.bottomAnchor.constraint(
+                equalTo: view.layoutMarginsGuide.bottomAnchor)
+        ])
+    }
+}
+
 // MARK: - CollectionView data source
 extension NumberViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -86,10 +88,10 @@ extension NumberViewController: UICollectionViewDataSource {
         if indexPath.row == viewModel.nums.value.count - 1 {
             switch viewModel.viewType {
             case .prime:
-                viewModel.startNum += 200
+                viewModel.startNum += K.Batch.prime
                 viewModel.loadBatchPrimes()
             case .fibo:
-                viewModel.startNum += 20
+                viewModel.startNum += K.Batch.fibo
                 viewModel.loadBatchFibos()
             }
         }
@@ -97,7 +99,7 @@ extension NumberViewController: UICollectionViewDataSource {
         let num = viewModel.nums.value[indexPath.row]
         
         cell.label.text = String(num.title)
-        cell.backgroundColor = num.colored ? K.Colors.dark : K.Colors.light
+        cell.backgroundColor = num.colored ? K.Colors.light : K.Colors.white
         
         return cell
     }

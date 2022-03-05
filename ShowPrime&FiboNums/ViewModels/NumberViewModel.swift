@@ -15,8 +15,8 @@ final class NumberViewModel {
     var startNum = 0
     var isPrevCellsColored = (far: false, near: true)
     
-    private let primeBatch = 200
-    private let fiboBatch = 20
+    private let primeBatch = K.Batch.prime
+    private let fiboBatch = K.Batch.fibo
     
     // MARK: - Initializer
     init() {
@@ -25,8 +25,6 @@ final class NumberViewModel {
     
     // MARK: - Public
     func loadBatchPrimes() {
-        print("Prime startNum: \(startNum)")
-        
         let finalNum = startNum + primeBatch
         let startArr: [Int] = Array(startNum...finalNum)
 
@@ -35,7 +33,7 @@ final class NumberViewModel {
             startArr.filter { num in
                 self.isPrime(num)
             }.forEach { filteredNum in
-                let colored = self.getColored(dependsOf: isPrevCellsColored)
+                let colored = self.isColored(dependsOf: isPrevCellsColored)
                 
                 let primeNum = Num(title: filteredNum, colored: colored)
                 self.nums.value.append(primeNum)
@@ -44,7 +42,6 @@ final class NumberViewModel {
     }
     
     func loadBatchFibos() {
-        print("Fibo startNum: \(startNum)")
         let finalNum = startNum + fiboBatch
         
         DispatchQueue.global().async { [self] in
@@ -53,7 +50,7 @@ final class NumberViewModel {
                 guard i < 92 else { return }
                 
                 let fibo = getFibo(of: i)
-                let colored = self.getColored(dependsOf: isPrevCellsColored)
+                let colored = self.isColored(dependsOf: isPrevCellsColored)
                 let fiboNum = Num(title: fibo, colored: colored)
                 nums.value.append(fiboNum)
             }
@@ -67,7 +64,7 @@ final class NumberViewModel {
     }
     
     // MARK: - Private
-    private func getColored(dependsOf previous: (Bool, Bool)) -> Bool {
+    private func isColored(dependsOf previous: (Bool, Bool)) -> Bool {
         var current = true
         if previous.0 && previous.1
         || previous.0 && !previous.1 {

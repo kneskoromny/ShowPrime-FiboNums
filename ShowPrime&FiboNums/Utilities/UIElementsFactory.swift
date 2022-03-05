@@ -28,7 +28,7 @@ struct UIElementsFactory {
     }
     
     static func makeSegmentedControl(_ action: Selector) -> UISegmentedControl {
-        let items = ["Prime", "Fibo"]
+        let items = ["prime", "fibo"]
         let sg = UISegmentedControl(items: items)
         sg.translatesAutoresizingMaskIntoConstraints = false
         sg.selectedSegmentIndex = 0
